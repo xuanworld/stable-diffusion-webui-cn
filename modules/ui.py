@@ -1073,7 +1073,6 @@ def create_ui(wrap_gradio_gpu_call):
                 with gr.Tab(label="预处理图像"):
                     process_src = gr.Textbox(label='源目录')
                     process_dst = gr.Textbox(label='目标目录')
-
                     process_width = gr.Slider(minimum=64, maximum=2048, step=64, label="Width", value=512)
                     process_height = gr.Slider(minimum=64, maximum=2048, step=64, label="Height", value=512)
 
@@ -1082,13 +1081,15 @@ def create_ui(wrap_gradio_gpu_call):
                         process_split = gr.Checkbox(label='将超大图像一分为二')
                         process_caption = gr.Checkbox(label='使用 BLIP 标题作为文件名')
                         process_caption_deepbooru = gr.Checkbox(label='Use deepbooru for caption', visible=True if cmd_opts.deepdanbooru else False)
+                        
                         with gr.Row():
                         with gr.Column(scale=3):
                             gr.HTML(value="")
+                            
                         with gr.Column():
                             run_preprocess = gr.Button(value="预处理", variant='primary')
 
-                with gr.Tab(label="Train"):
+                with gr.Tab(label="训练"):
                     gr.HTML(value="<p style='margin-bottom: 0.7em'>训练嵌入；必须指定具有一组 1:1 比例图像的目录</p>")
                     train_embedding_name = gr.Dropdown(label='嵌入', choices=sorted(sd_hijack.model_hijack.embedding_db.word_embeddings.keys()))
                     train_hypernetwork_name = gr.Dropdown(label='超网络', choices=[x for x in shared.hypernetworks.keys()])
